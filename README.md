@@ -178,14 +178,17 @@ _webview.addJavascriptInterface();
 var _webview:WebView = RichWebView.ios.getInstance(0, 0, 500, 500);
 
 // add listeners and other settings... but make sure you have added:
-_webview.settings.addJavascriptInterface(); // will inject AirBridge
+_webview.settings.preferences.javaScriptEnabled = true;
+
+// inject the AirBridge script
+_webview.settings.addJavascriptInterface();
 
 // then you should add the webview to the stage:
 _webview.addView(onWebViewAddedToStage);
 
 function onWebViewAddedToStage():void
 {
-
+    // all _webview.settings properties/methods MUST happen before addView
 }
 ```
 
