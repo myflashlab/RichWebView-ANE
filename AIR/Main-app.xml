@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<application xmlns="http://ns.adobe.com/air/application/31.0">
+
+    <id>com.doitflash.exWebView</id>
+    <filename>Main</filename>
+    <name>Rich Webview</name>
+    <versionNumber>8.0.0</versionNumber>
+
+     <android>
+        <manifestAdditions>
+            <![CDATA[
+            <manifest android:installLocation="auto">
+                <uses-permission android:name="android.permission.INTERNET"/>
+                <uses-permission android:name="android.permission.WAKE_LOCK" />
+		        <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+		        <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+                <uses-sdk android:targetSdkVersion="26"/>
+
+                <application android:hardwareAccelerated="true" android:allowBackup="true">
+                    <activity>
+                        <intent-filter>
+                            <action android:name="android.intent.action.MAIN" />
+                            <category android:name="android.intent.category.LAUNCHER" />
+                        </intent-filter>
+                        <intent-filter>
+                            <action android:name="android.intent.action.VIEW" />
+                            <category android:name="android.intent.category.BROWSABLE" />
+                            <category android:name="android.intent.category.DEFAULT" />
+                        </intent-filter>
+                    </activity>
+
+                    <!-- required for html file select buttons -->
+                    <activity android:name="com.myflashlabs.richwebview.Pick" android:theme="@style/Theme.Transparent" />
+
+                    <!-- required for customtabs support on Android -->
+                    <receiver android:name="com.myflashlabs.richwebview.ChromeTabActionBroadcastReceiver" />
+
+                </application>
+            </manifest>
+            ]]>
+            </manifestAdditions>
+    </android>
+
+    <iPhone>
+
+        <InfoAdditions>
+            <![CDATA[
+
+                <key>MinimumOSVersion</key>
+                <string>9.0</string>
+
+                <key>UIStatusBarStyle</key>
+                <string>UIStatusBarStyleBlackOpaque</string>
+
+                <key>UIRequiresPersistentWiFi</key>
+                <string>NO</string>
+
+                <key>UIPrerenderedIcon</key>
+                <true />
+
+                <key>NSAppTransportSecurity</key>
+                <dict>
+                    <key>NSAllowsArbitraryLoads</key><true/>
+                </dict>
+
+                <!--required for webview GPS access-->
+                <key>NSLocationWhenInUseUsageDescription</key>
+                <string>I need location when in use</string>
+
+                <key>UIDeviceFamily</key>
+                <array>
+                    <string>1</string>
+                    <string>2</string>
+                </array>
+
+            ]]>
+        </InfoAdditions>
+
+        <requestedDisplayResolution>high</requestedDisplayResolution>
+    </iPhone>
+
+    <initialWindow>
+        <content>SWF file name is set automatically at compile time</content>
+        <visible>true</visible>
+        <autoOrients>true</autoOrients>
+        <fullScreen>false</fullScreen>
+    </initialWindow>
+
+    <icon>
+        <image36x36>icons/icon_36.png</image36x36>
+        <image48x48>icons/icon_48.png</image48x48>
+        <image72x72>icons/icon_72.png</image72x72>
+        <image96x96>icons/icon_96.png</image96x96>
+        <image144x144>icons/icon_144.png</image144x144>
+        <image192x192>icons/icon_192.png</image192x192>
+        <image512x512>icons/icon_512.png</image512x512>
+        <image1024x1024>icons/icon_1024.png</image1024x1024>
+    </icon>
+
+    <extensions>
+        <extensionID>com.myflashlab.air.extensions.richWebView</extensionID>
+        <extensionID>com.myflashlab.air.extensions.permissionCheck</extensionID>
+
+        <extensionID>com.myflashlab.air.extensions.dependency.overrideAir</extensionID>
+        <extensionID>com.myflashlab.air.extensions.dependency.androidSupport.core</extensionID>
+        <extensionID>com.myflashlab.air.extensions.dependency.androidSupport.v4</extensionID>
+        <extensionID>com.myflashlab.air.extensions.dependency.androidSupport.customtabs</extensionID>
+        
+    </extensions>
+
+</application>

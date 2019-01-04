@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="author" content="Hadi Tavakoli">
+<title>RichWebView ANE</title>
+
+
+
+
+<!-- //////////////////////////////////////////////////////////////////// -->
+<!-- //////////////////////////////////////////////////////////////////// -->
+<!-- //////////////////////////////////////////////////////////////////// -->
+
+<link href="css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+/*
+	Android does not support fullscreen videos in HTML so, with the following css
+	we are removing the fullscreen button from Android
+
+	If you are using iFrame videos like vimeo or YouTube, you don't need to set
+	this block at all, anyway.
+
+	video::-webkit-media-controls-fullscreen-button {
+		display: none;
+	}
+	video::-webkit-media-controls-play-button {
+	   background: red;
+	}
+	video::-webkit-media-controls-play-button {}
+	video::-webkit-media-controls-timeline {}
+	video::-webkit-media-controls-current-time-display{}
+	video::-webkit-media-controls-time-remaining-display {}
+	video::-webkit-media-controls-time-remaining-display {}
+	video::-webkit-media-controls-mute-button {}
+	video::-webkit-media-controls-toggle-closed-captions-button {}
+	video::-webkit-media-controls-volume-slider {}
+*/
+
+.hiddenFileInput {
+	position: absolute;
+	top: 0;
+	left: 0;
+  width: 0;
+  height: 0;
+  visibility: hidden;
+}
+
+img {
+  max-width: 100%;
+  max-height: 60%;
+  margin-bottom: 8px;
+}
+</style>
+
+
+
+
+<!-- //////////////////////////////////////////////////////////////////// -->
+<!-- //////////////////////////////////////////////////////////////////// -->
+<!-- //////////////////////////////////////////////////////////////////// -->
+
+<script>
+"use strict";
+
+// ----------------------------------------------------------------------------- Funcs to be called from Flash
+function diplayAlert(msg) {
+	alert(msg);
+}
+
+// ----------------------------------------------------------------------------- Geolocation funcs
+// https://developer.mozilla.org/en-US/docs/Web/API/Geolocation/getCurrentPosition
+var gpsOptions = {
+  enableHighAccuracy: false,
+  timeout: 5000,
+  maximumAge: 10000
+};
+
+function onGpsSuccess(pos) {
+  var crd = pos.coords;
+  alert('Your current position is:\nLatitude : ' + crd.latitude + '\nLongitude: ' + crd.longitude + '\naccuracy: ' + crd.accuracy + 'meters');
+}
+
+function onGpsError(err) {
+  alert('ERROR(' + err.code + '): \n' + err.message);
+}
+
+function sendComplexDataToAir() {
+	var myJSONObject = {
+		"someData": [
+			{"var1": "value 1"},
+			{"var2": "value 2"},
+			{"var3": "value 3"},
+			{"var3": "As long as you have a valid Json in JS, you can have it received on the Air side with no problem!"}
+		]
+	};
+
+	// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify
+	var jsonStr = JSON.stringify(myJSONObject);
+
+	// http://www.w3schools.com/jsref/jsref_encodeURI.asp
+	var encodedStr = encodeURIComponent(jsonStr);
+
+	// and finally send it to flash
+	AirBridge.evoke('parseJson('+ encodedStr +')');
+}
+
+// ----------------------------------------------------------------------------- File picker funcs
+// demo code for choosing a file
+window.onload = function()
+{
+  console.log('window.onload');
+  var loadFileBtn = document.querySelector('.loadFileBtn');
+  var fileInputField = document.querySelector('.hiddenFileInput');
+  var img = document.querySelector('img');
+	// var debug = document.querySelector('#debug');
+
+  loadFileBtn.addEventListener('click', function() {
+    fileInputField.click();
+  }.bind(this));
+
+  fileInputField.addEventListener('change', function(evt) {
+		// debug.value = "1_";
+		var theFile = evt.target.files[0];
+		var _size = theFile.size;
+
+		// if(_size > 256000) {
+		// 	alert("please pick a file smaller than 250KB!\nYou are not limited to this size of course!\nThis is just a demo.");
+		// 	return;
+		// }
+
+		if (typeof FileReader === "undefined") {
+			alert("Your browser is too old!\nUse another method to deal with the selected file.");
+			return;
+		}
+
+		// https://developer.mozilla.org/en-US/docs/Web/API/FileReader
+    var reader = new FileReader();
+
+
+		reader.onloadend = function (evt) {
+			img.src = evt.target.result;
+
+			if(evt.target.error) {
+				// https://developer.mozilla.org/en-US/docs/Web/API/FileError
+				alert("error code = " + evt.target.error.code + "\nsee what this err code means:\nhttps://developer.mozilla.org/en-US/docs/Web/API/FileError");
+			}
+    };
+
+
+		if(theFile) {
+			reader.readAsDataURL(theFile);
+		} else {
+			alert("error = file not found");
+		}
+  });
+
+	onPageLoaded();
+};
+
+// -----------------------------------------------------------------------------
+
+function onPageLoaded() {
+	setTimeout(checkNow, 1000);
+
+	function checkNow() {
+		if(typeof airBridge === 'undefined') {
+			alert("You are NOT running this page in RichWebview ANE!");
+		} else {
+			alert("you are running this ANE on " + airBridge.OS);
+		}
+	}
+}
+
+</script>
+
+<!-- to support older Android versions for picking a file -->
+<script src="js/modernizr.custom.72986.js"></script>
+</head>
+
+
+
+
+<!-- //////////////////////////////////////////////////////////////////// -->
+<!-- //////////////////////////////////////////////////////////////////// -->
+<!-- //////////////////////////////////////////////////////////////////// -->
+
+<body>
+	<div class="container">
+		<div class="jumbotron">
+			<h2>RichWebView AIR Native Extension</h2>
+			<button class="btn btn-primary btn-lg" type="button" onClick="AirBridge.evoke('closeWebView()')">Close Window</button>
+			<hr>
+			<p>
+				RichWebView extension lets you create a webview port inside your AdobeAIR mobile application and load content from a URL or an offline html file on Android and iOS.
+			</p>
+		</div>
+
+
+		<p>
+			<h3>Main Features</h3>
+			<ul>
+				<li>Use multiple Webview instances</li>
+				<li>Call JS functions from AIR</li>
+				<li>Send messages to AIR from JS</li>
+				<li>Navigate back and forth through pages</li>
+				<li>Control the Scroll position and style</li>
+				<li>Change the view port size and position at runtime</li>
+                <li>Support multiple Webview instances</li>
+				<li>Play video files inside the webview including embedded iFrame videos</li>
+				<li>Take full screenshots from your webview object</li>
+				<li>Get GPS location information in to your JS</li>
+				<li>Enable file picker dialog on your HTML input fields</li>
+				<li>Control background color with AARRGGBB format. (supports transparent)</li>
+				<li>TouchEvent to know when the WebView is touched</li>
+				<li>Optionally prevent URL loads and let AIR handle them</li>
+				<li>Load HTML Strings directly into the WebView instance</li>
+				<li>Support Android custom-tabs</li>
+				<li>Supports iOS SafariViewController</li>
+				<li>Supports iOS WKWebView API</li>
+				<li>And of course you can do whatever HTML allows you to do!</li>
+			</ul>
+
+			let's see these features in more details!
+		</p>
+		<hr>
+
+
+		<p>
+			<h3>Communication between AIR and JS</h3>
+			Possibilities are endless when you can send messages to AIR and vice versa. you may do simple tasks like playing a sound or showing a toast but you can also do complicated stuff like opening the camera, taking a picture and retrieve the photo in your JS logic! I don't know, just use your imagination! As a very simple test, I'm going to tell my flash app to play a sound by calling the following func from my html: <code>toPlaySound()</code>
+			<a href="javascript:void(0);" onclick="AirBridge.evoke('toPlaySound()')" return false;>CLICK ME!</a> <b>make sure your device is not silenced to hear the sound</b>
+			<br><br>
+			As another test, I'm going to send a message to AIR and in return, the AIR app will call JS to open an Alert window! <a href="javascript:void(0);" onclick="AirBridge.evoke('toOpenJSAlert()')" return false;> CLICK HERE.</a>
+		</p>
+		<hr>
+
+
+		<p>
+			<h3>Sending complex data from JS to AIR</h3>
+			There are times when you wish to send a lot of information from JS to your AIR app. The best approach is to create a JSON string in JS, <i>encodeURIComponent</i> it and then send to the other side. (In this example, check your debugger trace log to see the JS Json string is delivered to the AIR side as soon as you hit the following button.
+			<button type="button" onClick="sendComplexDataToAir()">Send Complex Data To AIR</button>
+		</p>
+		<hr>
+
+
+		<p>
+			<h3>Prevent URL loads in html content and let AIR handle it</h3>
+			RichWebview allows you monitor the URLs which are about to open. In your AIR app, you can listen to <b>WebViewEvents.PAGE_STARTING</b> and you will be informed when a new URL is about to open. For example, you wish to handle URLs like <b>mailto:email@domain.com</b> or <b>tel:5555555</b> inside your AS3 code. You can easily do that. Try hitting the below buttons, and you will see that AS3 will handle the click instead of the native webview. And of course you can handle any type of URL with this approach.
+			<button type="button" onClick="location.href='mailto:email@domain.com';">mailto:email@domain.com</button>
+			<button type="button" onclick="location.href='tel:5555555';">tel:5555555</button>
+		</p>
+		<hr>
+
+
+		<p>
+			<h3>Resizing the view port in runtime</h3>
+			Being able to resize and position your webView is very important because with that you will be able to put the web view anywhere inside your app design. You can easily change the position and dimension of your view from AIR... try the following buttons to test the resizing option...
+			<button type="button" onClick="AirBridge.evoke('changePosition(50,100,100,200)')">change View Port</button>
+			<button type="button" onClick="AirBridge.evoke('changePosition(0,0,0,0)')">Go Fullscreen</button>
+		</p>
+		<hr>
+
+
+		<p>
+			<h3>Take screenshots</h3>
+			If you need screenshots from your web page content, all you have to do is to call <code>_webview.takeScreenshot();</code>
+			<br>
+			<button type="button" onClick="AirBridge.evoke('toTakeScreenshot()')">Test The Screenshot!</button>
+		</p>
+		<hr>
+
+
+		<p>
+			<h3>File Picker</h3>
+			You can also use an ordinary html inputfield to let users pick a file from their device! use the following button to test it.
+			<br>
+			<input type="file" accept="image/*" class="hiddenFileInput">
+		  <button class="loadFileBtn">Load File</button>
+			<!--<input id="debug" type="text"/>-->
+			<img src="" />
+		</p>
+		<hr>
+
+	</div>
+</body>
+</html>
