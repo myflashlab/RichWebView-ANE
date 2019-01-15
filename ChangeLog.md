@@ -1,5 +1,35 @@
 RichWebViewII Adobe AIR Native Extension
 
+*Jan 15, 2019 - V8.0.3*
+* Added listener ```WebViewEvents.KEYBOARD_VISIBILITY``` to know if Android SoftKeyboard is open or not. use like below:
+
+```actionscript
+RichWebView.android.addEventListener(WebViewEvents.KEYBOARD_VISIBILITY, function (event:WebViewEvents):void
+{
+    trace("is Keyboard open? " + event.isOpen);
+});
+```
+
+* Moved ```showSoftKeyboard(true);``` method from webview instances to the general ```RichWebView.android``` package because force showing the softkeyboard is only needed when you have a webview window open and you want the keyboard open on your AIR TextField object. If you want to open the softkeyboard on your AIR TextField object when a webview instance is open, doing it this:
+
+```actionscript
+var txtField:TextField = new TextField();
+txtField.addEventListener(FocusEvent.FOCUS_IN, onTxtFieldFocusIn);
+txtField.border = true;
+txtField.type = TextFieldType.INPUT;
+txtField.text = "AS3 TextField";
+addChild(txtField);
+
+function onTxtFieldFocusIn(e:FocusEvent):void
+{
+    // remove the request from the webview instance first
+    if(_webviewInstance) _webviewInstance.requestFocus(Focus.UP);
+
+    // if the keyboard is not already open, force it to open!
+    if(!_isKeyboardOpen) RichWebView.android.showSoftKeyboard(true);
+}
+```
+
 *Jan 4, 2019 - V8.0.0*
 * Rebuilt the whole thing from scratch. We are now using the latest APIs for WebView on Android and WKWebView on iOS
 * Unlike before, the Android and iOS AS3 sides are NOT similar to each other anymore. This is a good move for this ANE because the native APIs are working very differently and making them look similar on the AIR side was preventing us from being able to bring all native features to the AIR side. With the new API structure however, we are able to keep the ANE updated with the latest changes on the native sides whenever they happen.
