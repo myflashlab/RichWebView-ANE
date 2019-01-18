@@ -99,7 +99,7 @@ FOR ANDROID:
 	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-sdk android:targetSdkVersion="26"/>
 
-    <application android:allowBackup="true">
+    <application android:hardwareAccelerated="true" android:allowBackup="true">
                     
         <!-- required for html file select buttons -->
         <activity android:name="com.myflashlabs.richwebview.Pick" android:theme="@style/Theme.Transparent" />
