@@ -1,5 +1,17 @@
 RichWebViewII Adobe AIR Native Extension
 
+*Feb 5, 2019 - V8.0.7*
+* Added property ```_webviewInstance.backForwardList``` to both Android and iOS sides. it returns an Array of objects containing the history list of urls that the user has navigated in the current session of the webview instance window.
+* Added listener ```WebViewEvents.SCROLLING``` to both Android and iOS sides to know the scrolling x/y position of the webview window.
+```actionscript
+_webviewInstance.addEventListener(WebViewEvents.SCROLLING, onWebviewFile_Scrolling);
+
+function onWebviewFile_Scrolling(e:WebViewEvents):void
+{
+    trace("onWebviewFile_Scrolling > " + "x = " + e.x + " y = " + e.y);
+}
+```
+
 *Jan 15, 2019 - V8.0.3*
 * Added listener ```WebViewEvents.KEYBOARD_VISIBILITY``` to know if Android SoftKeyboard is open or not. use like below:
 
