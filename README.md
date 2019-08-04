@@ -97,7 +97,7 @@ FOR ANDROID:
 
     <uses-permission android:name="android.permission.INTERNET"/>
 	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-sdk android:targetSdkVersion="26"/>
+    <uses-sdk android:targetSdkVersion="28"/>
 
     <application android:hardwareAccelerated="true" android:allowBackup="true">
                     
@@ -120,7 +120,7 @@ FOR ANDROID:
 FOR iOS:
 -->
 <key>MinimumOSVersion</key>
-<string>9.0</string>
+<string>10.0</string>
 
 <!-- Not recommanded but add this in case you want to open nonsecure http urls -->
 <key>NSAppTransportSecurity</key>
@@ -204,7 +204,7 @@ AirBridge.evoke("toVibrate");
 
 # Requirements
 * Android SDK 19+
-* iOS 9.0+
+* iOS 10.0+
 * AIR 31+
 
 # Permissions

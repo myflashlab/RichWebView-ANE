@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<application xmlns="http://ns.adobe.com/air/application/31.0">
+<application xmlns="http://ns.adobe.com/air/application/32.0">
 
     <id>com.doitflash.exWebView</id>
     <filename>Main</filename>
     <name>Rich Webview</name>
-    <versionNumber>8.0.0</versionNumber>
+    <versionNumber>8.0.91</versionNumber>
 
      <android>
         <manifestAdditions>
@@ -14,7 +14,7 @@
                 <uses-permission android:name="android.permission.WAKE_LOCK" />
 		        <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 		        <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-                <uses-sdk android:targetSdkVersion="26"/>
+                <uses-sdk android:targetSdkVersion="28"/>
 
                 <application android:hardwareAccelerated="true" android:allowBackup="true">
                     <activity>
@@ -47,7 +47,7 @@
             <![CDATA[
 
                 <key>MinimumOSVersion</key>
-                <string>9.0</string>
+                <string>10.0</string>
 
                 <key>UIStatusBarStyle</key>
                 <string>UIStatusBarStyleBlackOpaque</string>
@@ -100,7 +100,7 @@
     <extensions>
         <extensionID>com.myflashlab.air.extensions.richWebView</extensionID>
         <extensionID>com.myflashlab.air.extensions.permissionCheck</extensionID>
-
+        <extensionID>com.myflashlab.air.extensions.fileBrowser</extensionID>
         <extensionID>com.myflashlab.air.extensions.dependency.overrideAir</extensionID>
         <extensionID>com.myflashlab.air.extensions.dependency.androidSupport.core</extensionID>
         <extensionID>com.myflashlab.air.extensions.dependency.androidSupport.v4</extensionID>

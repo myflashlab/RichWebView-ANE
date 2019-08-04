@@ -1,5 +1,9 @@
 RichWebViewII Adobe AIR Native Extension
 
+*Aug 4, 2019 - V8.0.91*
+* Added Android 64-bit support
+* Supports iOS 10+
+
 *Feb 21, 2019 - V8.0.8*
 * Added method ```setFocus()``` to the WebView class on the iOS side. Call this method when the webview window loses focus and won't respond to user's touches. This problem happens when your app is in landscape and your user tries to pick a file with the file picker option in HTML.
 
