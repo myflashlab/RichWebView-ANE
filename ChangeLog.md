@@ -1,15 +1,24 @@
 RichWebViewII Adobe AIR Native Extension
 
+*Feb 5, 2020 - V9.0.2*
+- Add some minor improvement
+
+*Jan 1, 2020 - V9.0.1*
+- Add some minor improvement
+
+*Jan 1, 2020 - V9.0.0*
+- Add androidx dependencies instead of android support libraries
+
 *Aug 4, 2019 - V8.0.91*
 * Added Android 64-bit support
 * Supports iOS 10+
 
 *Feb 21, 2019 - V8.0.8*
-* Added method ```setFocus()``` to the WebView class on the iOS side. Call this method when the webview window loses focus and won't respond to user's touches. This problem happens when your app is in landscape and your user tries to pick a file with the file picker option in HTML.
+* Added method `setFocus()` to the WebView class on the iOS side. Call this method when the webview window loses focus and won't respond to user's touches. This problem happens when your app is in landscape and your user tries to pick a file with the file picker option in HTML.
 
 *Feb 5, 2019 - V8.0.7*
-* Added property ```_webviewInstance.backForwardList``` to both Android and iOS sides. it returns an Array of objects containing the history list of urls that the user has navigated in the current session of the webview instance window.
-* Added listener ```WebViewEvents.SCROLLING``` to both Android and iOS sides to know the scrolling x/y position of the webview window.
+* Added property `_webviewInstance.backForwardList` to both Android and iOS sides. it returns an Array of objects containing the history list of urls that the user has navigated in the current session of the webview instance window.
+* Added listener `WebViewEvents.SCROLLING` to both Android and iOS sides to know the scrolling x/y position of the webview window.
 ```actionscript
 _webviewInstance.addEventListener(WebViewEvents.SCROLLING, onWebviewFile_Scrolling);
 
@@ -20,7 +29,7 @@ function onWebviewFile_Scrolling(e:WebViewEvents):void
 ```
 
 *Jan 15, 2019 - V8.0.3*
-* Added listener ```WebViewEvents.KEYBOARD_VISIBILITY``` to know if Android SoftKeyboard is open or not. use like below:
+* Added listener `WebViewEvents.KEYBOARD_VISIBILITY` to know if Android SoftKeyboard is open or not. use like below:
 
 ```actionscript
 RichWebView.android.addEventListener(WebViewEvents.KEYBOARD_VISIBILITY, function (event:WebViewEvents):void
@@ -29,7 +38,7 @@ RichWebView.android.addEventListener(WebViewEvents.KEYBOARD_VISIBILITY, function
 });
 ```
 
-* Moved ```showSoftKeyboard(true);``` method from webview instances to the general ```RichWebView.android``` package because force showing the softkeyboard is only needed when you have a webview window open and you want the keyboard open on your AIR TextField object. If you want to open the softkeyboard on your AIR TextField object when a webview instance is open, doing it this:
+* Moved `showSoftKeyboard(true);` method from webview instances to the general `RichWebView.android` package because force showing the softkeyboard is only needed when you have a webview window open and you want the keyboard open on your AIR TextField object. If you want to open the softkeyboard on your AIR TextField object when a webview instance is open, doing it this:
 
 ```actionscript
 var txtField:TextField = new TextField();
