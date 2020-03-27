@@ -4,7 +4,7 @@
     <id>com.doitflash.exWebView</id>
     <filename>Main</filename>
     <name>Rich Webview</name>
-    <versionNumber>8.0.91</versionNumber>
+    <versionNumber>9.0.2</versionNumber>
 
      <android>
         <manifestAdditions>
@@ -15,6 +15,7 @@
 		        <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 		        <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
                 <uses-sdk android:targetSdkVersion="28"/>
+                
 
                 <application android:hardwareAccelerated="true" android:allowBackup="true">
                     <activity>
@@ -48,6 +49,9 @@
 
                 <key>MinimumOSVersion</key>
                 <string>10.0</string>
+
+                <key>UILaunchStoryboardName</key>
+		        <string>LaunchScreen</string>
 
                 <key>UIStatusBarStyle</key>
                 <string>UIStatusBarStyleBlackOpaque</string>
@@ -102,10 +106,10 @@
         <extensionID>com.myflashlab.air.extensions.permissionCheck</extensionID>
         <extensionID>com.myflashlab.air.extensions.fileBrowser</extensionID>
         <extensionID>com.myflashlab.air.extensions.dependency.overrideAir</extensionID>
-        <extensionID>com.myflashlab.air.extensions.dependency.androidSupport.core</extensionID>
-        <extensionID>com.myflashlab.air.extensions.dependency.androidSupport.v4</extensionID>
-        <extensionID>com.myflashlab.air.extensions.dependency.androidSupport.customtabs</extensionID>
-        
+        <extensionID>com.myflashlab.air.extensions.dependency.androidx.browser</extensionID>
+        <extensionID>com.myflashlab.air.extensions.dependency.androidx.core</extensionID>
+        <extensionID>com.myflashlab.air.extensions.dependency.androidx.lifecycle</extensionID>
+
     </extensions>
 
 </application>

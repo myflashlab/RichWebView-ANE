@@ -18,6 +18,7 @@ import flash.desktop.NativeApplication;
 import flash.desktop.SystemIdleMode;
 import flash.display.Sprite;
 import flash.display.StageAlign;
+import flash.display.StageOrientation;
 import flash.display.StageScaleMode;
 import flash.events.Event;
 import flash.events.InvokeEvent;
@@ -133,6 +134,7 @@ public class MainIos extends Sprite
 	{
 		if(_txt)
 		{
+			_txt.y = 150 * (1 / DeviceInfo.dpiScaleMultiplier);
 			_txt.width = stage.stageWidth * (1 / DeviceInfo.dpiScaleMultiplier);
 			
 			C.x = 0;
@@ -287,7 +289,7 @@ public class MainIos extends Sprite
 			RichWebView.ios.cookieManager.cookieAcceptPolicy = NSHTTPCookieAcceptPolicy.ALWAYS;
 			
 			// create a new WebView instance
-			_webviewFile = RichWebView.ios.getInstance(0, stage.stageHeight * 0.5, stage.stageWidth, stage.stageHeight * 0.5);
+			_webviewFile = RichWebView.ios.getInstance(0, stage.stageHeight * 0, stage.stageWidth, stage.stageHeight * 0.5);
 			
 			// set ios configuration BEFORE [addView] method. Nothing will happen if you set them or modify them after [addView] is called
 			_webviewFile.settings.setDataStore(WebsiteDataStore.DEFAULT);
@@ -307,6 +309,7 @@ public class MainIos extends Sprite
 			_webviewFile.addEventListener(WebViewEvents.RECEIVED_MESSAGE_FROM_JS, onWebviewFile_ReceivedMessage);
 			_webviewFile.addEventListener(WebViewEvents.SCREENSHOT, onWebviewFile_Screenshot);
 			_webviewFile.addEventListener(WebViewEvents.TOUCH, onWebviewFile_Touch);
+			_webviewFile.addEventListener(WebViewEvents.SCROLLING, onWebviewFile_Scrolling);
 			
 			// Add the Native window on top of your AIR app (NOTICE: ALL Native windows will always stay on TOP of AIR content. This is a general rule with any ANE)
 			_webviewFile.addView(onWebViewAddedToStage);
@@ -322,7 +325,6 @@ public class MainIos extends Sprite
 			
 			// load content
 			_webviewFile.loadFile(File.applicationStorageDirectory.resolvePath("demoHtml/index.html"), File.applicationStorageDirectory);
-			//_webviewFile.loadUrl("https://www.google.com/");
 		}
 		
 		// ---------------------------------------------------------------------------------------------------------
@@ -436,6 +438,11 @@ public class MainIos extends Sprite
 	private function onWebviewFile_Touch(e:WebViewEvents):void
 	{
 		trace("onWebviewFile_Touch > " + "x = " + e.x + " y = " + e.y);
+	}
+	
+	private function onWebviewFile_Scrolling(e:WebViewEvents):void
+	{
+		trace("onWebviewFile_Scrolling > " + "x = " + e.x + " y = " + e.y);
 	}
 	
 	// -------------------------------------------- methods to be called from JS

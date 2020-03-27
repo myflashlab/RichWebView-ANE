@@ -133,6 +133,7 @@ public class MainAndroid extends Sprite
 	{
 		if(_txt)
 		{
+			_txt.y = 150 * (1 / DeviceInfo.dpiScaleMultiplier);
 			_txt.width = stage.stageWidth * (1 / DeviceInfo.dpiScaleMultiplier);
 			
 			C.x = 0;
@@ -283,7 +284,7 @@ public class MainAndroid extends Sprite
 			}
 			
 			// create a new WebView instance
-			_webviewFile = RichWebView.android.getInstance(0, stage.stageHeight * 0.5, stage.stageWidth, stage.stageHeight * 0.5);
+			_webviewFile = RichWebView.android.getInstance(0, stage.stageHeight * 0, stage.stageWidth, stage.stageHeight * 0.5);
 			
 			// add listeners
 			_webviewFile.addEventListener(WebViewEvents.BACK_PRESSED, onWebviewFile_BackPressed);
@@ -298,6 +299,7 @@ public class MainAndroid extends Sprite
 			_webviewFile.addEventListener(WebViewEvents.ERROR_SSL, onWebviewFile_Error);
 			_webviewFile.addEventListener(WebViewEvents.SCREENSHOT, onWebviewFile_Screenshot);
 			_webviewFile.addEventListener(WebViewEvents.TOUCH, onWebviewFile_Touch);
+			_webviewFile.addEventListener(WebViewEvents.SCROLLING, onWebviewFile_Scrolling);
 			
 			// settings
 			RichWebView.android.cookieManager.setAcceptThirdPartyCookies(_webviewFile, true);
@@ -330,7 +332,7 @@ public class MainAndroid extends Sprite
 			
 			// load content
 			_webviewFile.loadFile(File.applicationStorageDirectory.resolvePath("demoHtml/index.html"));
-			//_webviewFile.loadUrl("https://www.google.com/");
+//			_webviewFile.loadUrl("https://www.google.com/");
 		}
 		
 		// ---------------------------------------------------------------------------------------------------------
@@ -467,6 +469,11 @@ public class MainAndroid extends Sprite
 	private function onWebviewFile_Touch(e:WebViewEvents):void
 	{
 		trace("onWebviewFile_Touch > " + "x = " + e.x + " y = " + e.y);
+	}
+	
+	private function onWebviewFile_Scrolling(e:WebViewEvents):void
+	{
+		trace("onWebviewFile_Scrolling > " + "x = " + e.x + " y = " + e.y);
 	}
 	
 	private function onWebviewFile_ReceivedMessage(e:WebViewEvents):void
