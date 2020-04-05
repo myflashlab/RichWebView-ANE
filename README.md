@@ -145,9 +145,9 @@ Embedding the ANE:
         <extensionID>com.myflashlab.air.extensions.permissionCheck</extensionID>
 
         <extensionID>com.myflashlab.air.extensions.dependency.overrideAir</extensionID>
-        <extensionID>com.myflashlab.air.extensions.dependency.androidSupport.core</extensionID>
-        <extensionID>com.myflashlab.air.extensions.dependency.androidSupport.v4</extensionID>
-        <extensionID>com.myflashlab.air.extensions.dependency.androidSupport.customtabs</extensionID>
+        <extensionID>com.myflashlab.air.extensions.dependency.androidx.browser</extensionID>
+        <extensionID>com.myflashlab.air.extensions.dependency.androidx.core</extensionID>
+        <extensionID>com.myflashlab.air.extensions.dependency.androidx.lifecycle</extensionID>
         
     </extensions>
 ```
@@ -205,7 +205,7 @@ AirBridge.evoke("toVibrate");
 # Requirements
 * Android SDK 19+
 * iOS 10.0+
-* AIR 31+
+* AIR 33+
 
 # Permissions
 Below are the list of Permissions this ANE might require. Check out the demo project available at this repository to see how we have used the [PermissionCheck ANE](http://www.myflashlabs.com/product/native-access-permission-check-settings-menu-air-native-extension/) to ask for the permissions.

@@ -1,13 +1,7 @@
 RichWebViewII Adobe AIR Native Extension
 
-*Feb 5, 2020 - V9.0.2*
-- Add some minor improvement
-
-*Jan 1, 2020 - V9.0.1*
-- Add some minor improvement
-
-*Jan 1, 2020 - V9.0.0*
-- Add androidx dependencies instead of android support libraries
+*Apr 05, 2020 - V9.0.2*
+- Added androidx dependencies instead of android support libraries
 
 *Aug 4, 2019 - V8.0.91*
 * Added Android 64-bit support
